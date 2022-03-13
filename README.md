@@ -12,7 +12,7 @@ const abm = {
 }
 ```
 
-> AMB-OPERATION is a SPA, it is a challenge created for Alkemi, you only have to register and you will be able to control your income and expenses. The balance is automatically calculated. 
+> AMB-OPERATION is a SPA, it is a challenge created for Alkemy, you only have to register and you will be able to control your income and expenses. The balance is automatically calculated. 
 
 
 
