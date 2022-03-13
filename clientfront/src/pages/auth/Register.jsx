@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import clientAxios from "../../axios/clientAxios";
 import { ShowError } from "./../../components/errors/ShowError";
 import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import { Spinner } from "../../components/Spinner";
 
 export const Register = () => {
   const navigate = useNavigate();
+  const { response, setResponse } = useAuth();
 
   const [error, setError] = useState({});
   const [name, setName] = useState("");
@@ -23,16 +26,25 @@ export const Register = () => {
     }
 
     try {
+      setResponse(true);
       const { data } = await clientAxios.post("/auth", {
         name,
         email,
         password,
       });
 
+      if (data) {
+        setResponse(false);
+      }
+
       setError({ msg: data.msg, error: false });
       setTimeout(() => {
         setError({});
       }, 2000);
+
+      setName("");
+      setEmail("");
+      setPassword("");
 
       navigate("/");
     } catch (error) {
@@ -40,6 +52,7 @@ export const Register = () => {
       setTimeout(() => {
         setError({});
       }, 2000);
+      setResponse(false);
     }
   };
 
@@ -74,7 +87,12 @@ export const Register = () => {
           name='password'
           type='password'
         />
-        <input type='submit' value='register' className='button' />
+
+        {response ? (
+          <Spinner />
+        ) : (
+          <input type='submit' value='register' className='button' />
+        )}
       </form>
       <Link to='/' className='link'>
         I have an account

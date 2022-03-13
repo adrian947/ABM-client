@@ -3,10 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { ShowError } from "./../../components/errors/ShowError";
 import clientAxios from "./../../axios/clientAxios";
 import useAuth from "./../../hooks/useAuth";
+import { Spinner } from "../../components/Spinner";
 
 export const SignIn = () => {
   const navigate = useNavigate();
-  const { setAuth } = useAuth();
+  const { setAuth, response, setResponse } = useAuth();
 
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
@@ -24,10 +25,15 @@ export const SignIn = () => {
     }
 
     try {
+      setResponse(true);
       const { data } = await clientAxios.post("/auth/login", {
         email,
         password,
       });
+
+      if (data) {
+        setResponse(false);
+      }
 
       setAuth(data);
 
@@ -39,6 +45,7 @@ export const SignIn = () => {
       setTimeout(() => {
         setError("");
       }, 2000);
+      setResponse(false);
     }
   };
 
@@ -63,7 +70,11 @@ export const SignIn = () => {
           value={password}
           type='password'
         />
-        <input type='submit' value='login' className='button' />
+        {response ? (
+          <Spinner />
+        ) : (
+          <input type='submit' value='login' className='button' />
+        )}
       </form>
       <Link to='register' className='link'>
         I have to register

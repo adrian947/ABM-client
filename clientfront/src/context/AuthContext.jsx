@@ -7,6 +7,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
   const [loading, setLoading] = useState(true);
+  const [response, setResponse] = useState(false);
 
   useEffect(() => {
     const authUser = async () => {
@@ -40,8 +41,10 @@ export const AuthProvider = ({ children }) => {
       value={{
         loading,
         auth,
+        response, 
         setAuth,
-        logOut
+        setResponse,
+        logOut,
       }}
     >
       {children}

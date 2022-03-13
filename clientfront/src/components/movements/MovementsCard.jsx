@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import clientAxios from "../../axios/clientAxios";
 import { changeDate } from "../../helpers/moment";
+import { Spinner } from "../spinner";
 import { tokenAuth } from "./../../axios/authTokenHeaders";
 
 export const MovementsCard = ({
@@ -11,18 +12,24 @@ export const MovementsCard = ({
 }) => {
   const { amount, concepts, created_at, type, id } = movement;
 
-  const newDate = changeDate(created_at)
+  const newDate = changeDate(created_at);
 
   const [modal, setModal] = useState(false);
   const [conceptsForm, setConceptsForm] = useState(concepts);
   const [amountForm, setAmountForm] = useState(amount);
+  const [loading, setLoading] = useState(false);
 
   const handleDelete = async (id) => {
     try {
+      setLoading(true);
       const { data } = await clientAxios.delete(`movements/${id}`, tokenAuth());
+      if (data) {
+        setLoading(false);
+      }
       setNewMovement(data.movement);
     } catch (error) {
       console.log("error", error);
+      setLoading(false);
     }
   };
 
@@ -34,6 +41,7 @@ export const MovementsCard = ({
     e.preventDefault();
 
     try {
+      setLoading(true);
       const resp = await clientAxios.put(
         `movements/${id}`,
         { concepts: conceptsForm, amount: amountForm },
@@ -41,10 +49,13 @@ export const MovementsCard = ({
       );
 
       setUpdateMovement(!updateMovement);
-
-      setModal(false)
+      if (resp) {
+        setLoading(false);
+      }
+      setModal(false);
     } catch (error) {
       console.log("error", error);
+      setLoading(false);
     }
   };
 
@@ -55,12 +66,30 @@ export const MovementsCard = ({
           <div>
             <h3>Concept: {concepts}</h3>
             <h3>Amount: $ {amount}</h3>
-            <p className={type === 'entry' ? 'typeEntry':' typeEgress'}>Type: {type}</p>
+            <p className={type === "entry" ? "typeEntry" : " typeEgress"}>
+              Type: {type}
+            </p>
             <p>{newDate}</p>
           </div>
           <div>
-            <button onClick={() => handleDelete(id)} className='buttonDelete'>Delete</button>
-            <button onClick={() => handleUpdate(id)} className='buttonUpdate'>UPDATE</button>
+            {loading ? (
+              <Spinner />
+            ) : (
+              <>
+                <button
+                  onClick={() => handleDelete(id)}
+                  className='buttonDelete'
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={() => handleUpdate(id)}
+                  className='buttonUpdate'
+                >
+                  UPDATE
+                </button>
+              </>
+            )}
           </div>
         </>
       ) : (
@@ -86,18 +115,24 @@ export const MovementsCard = ({
                 type='number'
               />
             </div>
-            <div className="buttonsUpdate">
-              <input
-                type='submit'
-                value='Apply movement'
-                className='buttonUpdate'
-              />
-              <input
-                type='button'
-                value='back'
-                className='buttonUpdate'
-                onClick={() => setModal(false)}
-              />
+            <div className='buttonsUpdate'>
+              {loading ? (
+                <Spinner />
+              ) : (
+                <>
+                  <input
+                    type='submit'
+                    value='Apply movement'
+                    className='buttonUpdate'
+                  />
+                  <input
+                    type='button'
+                    value='back'
+                    className='buttonUpdate'
+                    onClick={() => setModal(false)}
+                  />
+                </>
+              )}
             </div>
           </form>
         </>

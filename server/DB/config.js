@@ -10,7 +10,7 @@ const db = mysql.createPool({
 });
 
 let query = function (sql, values) {
-  // devolver una promesa
+  
   return new Promise((resolve, reject) => {
     db.getConnection(function (err, connection) {
       if (err) {
@@ -23,7 +23,7 @@ let query = function (sql, values) {
           } else {
             resolve(rows);
           }
-          // finaliza la sesión
+          // end sessión
           connection.release();
         });
       }
@@ -31,13 +31,6 @@ let query = function (sql, values) {
   });
 };
 
-// db.connect(function (err) {
-//   if (err) {
-//     console.log("error", err);
-//     return;
-//   } else {
-//     console.log("DB CONNECTED");
-//   }
-// });
+
 
 module.exports = query;
