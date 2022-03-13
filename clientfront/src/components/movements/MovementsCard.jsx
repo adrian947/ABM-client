@@ -66,7 +66,7 @@ export const MovementsCard = ({
       ) : (
         <>
           <form className='formFlex' onSubmit={(e) => handleSubmit(e, id)}>
-            <h2 className='titleAuth'>Update Movement</h2>
+            <h2 className='titleAuth titleUpdate'>Update Movement</h2>
             <div className='inputFlex'>
               <input
                 placeholder='Concepts'

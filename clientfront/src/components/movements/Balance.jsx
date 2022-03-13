@@ -39,8 +39,8 @@ const Balance = ({ movements }) => {
 
   return (
     <div className='container balance'>
-      <p className='pBalance'> Balance: {balance}</p>
-      <p className='pBalance'> Balance last 10 movements: {lastBalance}</p>
+      <p className='pBalance'> Balance: $ {balance}</p>
+      <p className='pBalance'> Balance last 10 movements: $ {lastBalance}</p>
     </div>
   );
 };

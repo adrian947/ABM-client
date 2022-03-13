@@ -10,11 +10,8 @@ body {
   padding: 0;
   box-sizing: border-box;
   background: rgb(81, 128, 254);
-  background: linear-gradient(
-    257deg,
-    rgba(81, 128, 254, 1) 20%,
-    rgba(220, 150, 241, 1) 88%
-  );
+  background: var(--primary);
+  font-family: "Roboto", sans-serif;
 }
 
 *::after,
@@ -23,7 +20,8 @@ body {
 }
 
 .authContainer {
-  height: 100vh;
+  
+  height: calc(100vh - 10rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -80,7 +78,7 @@ p {
   text-transform: uppercase;
   transition: all 0.3s ease;
   margin-top: 0.2rem;
-  color: #fff;  
+  color: #fff;
   font-size: 18px;
 }
 .button:hover {
@@ -90,13 +88,13 @@ p {
 
 .link {
   font-size: 1.4em;
-  color: blue;
+  color: #fff;
   transition: all 0.3s ease;
   margin-top: 2rem;
 }
 .link:hover {
   cursor: pointer;
-  color: var(--primary);
+  color: var(--elements);
 }
 .errorBanner {
   background-color: rgb(226, 86, 86);
@@ -110,17 +108,35 @@ p {
   text-transform: uppercase;
 }
 .header {
-  background-color: #e1e1e1;
+  background-color: var(--secondary);
   height: 5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
 }
+
+.header__title {
+  font-size: 1.2rem;
+}
+
+@media (min-width: 600px) {
+  .header__title {
+    font-size: 2rem;
+  }
+}
+
 .header__auth {
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   font-weight: bold;
   text-transform: uppercase;
+  text-align: center;
+}
+
+@media (min-width: 600px) {
+  .header__auth {
+    font-size: 1.6rem;
+  }
 }
 
 .grid {
@@ -178,7 +194,7 @@ p {
 @media (min-width: 600px) {
   .container__card {
     height: 6rem;
-    padding: 0.5rem 3rem;
+    padding: 0.5rem 2rem;
     margin-bottom: 5px;
     display: flex;
     flex-direction: row;
@@ -274,13 +290,14 @@ p {
   border: none;
   margin: 0.4rem 0;
   transition: all 0.3s ease;
+  text-transform: uppercase;
 }
 .buttonDelete:hover {
   background-color: rgb(226, 86, 20);
   cursor: pointer;
 }
 .typeEntry {
-  background-color: rgb(35, 177, 35);
+  background-color: var(--elements);
   padding: 0.2rem;
   text-transform: uppercase;
   font-weight: bold;
@@ -289,8 +306,8 @@ p {
   text-transform: uppercase;
   font-weight: bold;
   padding: 0.2rem;
-  color: #fff;
-  background-color: rgb(226, 86, 86);
+  color: #000;
+  background-color: rgb(246, 115, 115);
 }
 .balance {
   display: flex;
@@ -301,7 +318,11 @@ p {
 }
 
 .pBalance {
+  border: 1px solid var(--primary);
   font-size: 1.5rem;
+  display: block;
+  width: 100%;
+  padding: 1.5rem 0;
 }
 
 @media (min-width: 768px) {
@@ -316,6 +337,41 @@ p {
     width: unset;
   }
   .pBalance {
-    font-size: 2rem;
+    font-size: 1.8rem;
+  }
+}
+
+.titleUpdate {
+  font-size: 1rem;
+}
+.primaryTitle {
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: -3rem;
+  font-size: 2rem;
+  font-weight: 900;
+  font-family: "Anton", sans-serif;
+  background-image: url('./assets/dolar.jpg');
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: 1rem;
+}
+
+@media (min-width: 600px) {
+  .primaryTitle {
+    font-size: 3rem;
+  }
+}
+@media (min-width: 800px) {
+  .primaryTitle {
+    font-size: 5rem;
+    margin-bottom: -8rem;
+  }
+}
+@media (min-width: 1200px) {
+  .primaryTitle {
+    margin-bottom: -10rem;
+    font-size: 10rem;
   }
 }
